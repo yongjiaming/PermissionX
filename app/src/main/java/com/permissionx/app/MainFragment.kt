@@ -53,9 +53,9 @@ class MainFragment : Fragment() {
                 .setDialogTintColor(Color.parseColor("#1972e8"), Color.parseColor("#8ab6f5"))
                 .explainReasonWhenRequest()
                 .onExplainRequestReasonWhenRequest { scope, deniedList ->
-                    permissionTipsView = PermissionTipsView.Builder(this@MainFragment.requireContext()).setTitle("温馨提示")
+                    permissionTipsView = PermissionTipsView.Builder(this@MainFragment.requireContext()).setTitle("相机权限申请")
                         .setIcon(R.drawable.ic_launcher_background)
-                        .setMessage("申请相机权限用于视频通话").setOrientation(true).build()
+                        .setMessage("申请相机权限用于视频通话").setOrientation(false).build()
                     permissionTipsView?.show()
                 }
                 .onForwardToSettings { scope, deniedList ->

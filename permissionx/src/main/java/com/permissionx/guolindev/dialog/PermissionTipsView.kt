@@ -93,7 +93,11 @@ open class PermissionTipsView @JvmOverloads constructor(
     }
 
     fun dismiss() {
-        windowManager.removeView(this)
+        try {
+            windowManager.removeView(this)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     class Builder(val context: Context) {
