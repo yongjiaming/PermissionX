@@ -6,7 +6,10 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.util.AttributeSet
 import android.util.DisplayMetrics
-import android.view.*
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.Surface
+import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
@@ -28,8 +31,11 @@ open class PermissionTipsView @JvmOverloads constructor(
     private val iconImageView: ImageView
     private val titleTextView: TextView
     private val messageTextView: TextView
-    private val windowManager: WindowManager =
+    private val windowManager: WindowManager by lazy {
         context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+    }
+
+    private var isShowing = false
 
     init {
         val layoutRes =
@@ -54,6 +60,7 @@ open class PermissionTipsView @JvmOverloads constructor(
     }
 
     fun show() {
+        isShowing = true
         if (horizontal) showHorizontal() else showVertical()
     }
 
@@ -70,14 +77,14 @@ open class PermissionTipsView @JvmOverloads constructor(
     private fun showVertical() {
         show(
             WindowManager.LayoutParams.WRAP_CONTENT,
-            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT,
             false
         )
     }
 
     private fun show(width: Int, height: Int, isHorizontal: Boolean) {
         val flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
-                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or
                 WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
 
         WindowManager.LayoutParams(
@@ -93,10 +100,9 @@ open class PermissionTipsView @JvmOverloads constructor(
     }
 
     fun dismiss() {
-        try {
-            windowManager.removeView(this)
-        } catch (e: Exception) {
-            e.printStackTrace()
+        if (isShowing) {
+            windowManager.removeView(this@PermissionTipsView)
+            isShowing = false
         }
     }
 
