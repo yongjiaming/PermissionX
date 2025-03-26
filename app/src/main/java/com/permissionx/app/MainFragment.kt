@@ -39,7 +39,6 @@ class MainFragment : Fragment() {
             PermissionX.init(this)
                 .permissions(
                     Manifest.permission.CAMERA,
-                    Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.RECORD_AUDIO,
 //                    Manifest.permission.READ_CALENDAR,
 //                    Manifest.permission.READ_CALL_LOG,

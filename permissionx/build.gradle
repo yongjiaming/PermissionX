@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
+    namespace 'com.permissionx.guolindev'
     compileSdkVersion 34
 
     defaultConfig {
@@ -9,7 +10,30 @@ android {
         targetSdkVersion 34
     }
 
-    buildTypes {
+    buildTypes {android {
+    namespace 'com.permissionx.guolindev'
+    compileSdkVersion 34
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 34
+    }
+
+    // 新增编译选项配置
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    // ... 保持已有 buildTypes 和 buildFeatures 配置不变 ...
+}
+
+// ... 文件其他部分保持不变 ...
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -45,4 +69,4 @@ allprojects {
 }
 
 //apply plugin: "com.vanniktech.maven.publish"
-apply from: "../../V5LiveCore/script/publish.gradle"
+//apply from: "../../V5LiveCore/script/publish.gradle"
