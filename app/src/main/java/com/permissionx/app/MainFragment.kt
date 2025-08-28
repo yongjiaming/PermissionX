@@ -2,6 +2,7 @@ package com.permissionx.app
 
 import android.Manifest
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import com.permissionx.app.databinding.FragmentMainBinding
 import com.permissionx.guolindev.PermissionX
 import com.permissionx.guolindev.dialog.DefaultDialog
 import com.permissionx.guolindev.dialog.PermissionTipsView
+import androidx.core.graphics.drawable.toDrawable
 
 class MainFragment : Fragment() {
 
@@ -52,9 +54,14 @@ class MainFragment : Fragment() {
                 .setDialogTintColor(Color.parseColor("#1972e8"), Color.parseColor("#8ab6f5"))
                 .explainReasonWhenRequest()
                 .onExplainRequestReasonWhenRequest { scope, deniedList ->
-                    permissionTipsView = PermissionTipsView.Builder(this@MainFragment.requireContext()).setTitle("相机权限申请")
-                        .setIcon(R.drawable.ic_launcher_background)
-                        .setMessage("申请相机权限用于视频通话").setOrientation(false).build()
+                    permissionTipsView =
+                        PermissionTipsView.Builder(this@MainFragment.requireContext())
+                            .setTextColor(Color.RED)
+                            .setBackground(Color.BLUE.toDrawable())
+                            .setTitle("相机权限申请")
+                            .setIcon(R.drawable.ic_launcher_background)
+                            .setMessage("申请相机权限用于视频通话")
+                            .setOrientation(true).build()
                     permissionTipsView?.show()
                 }
                 .onForwardToSettings { scope, deniedList ->

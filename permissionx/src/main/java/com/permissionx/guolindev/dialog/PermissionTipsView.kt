@@ -1,6 +1,7 @@
 package com.permissionx.guolindev.dialog
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
 import android.os.Build
@@ -9,10 +10,12 @@ import android.util.DisplayMetrics
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.Surface
+import android.view.View
 import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.ColorInt
 import androidx.annotation.RequiresApi
 import com.permissionx.guolindev.R
 
@@ -51,12 +54,18 @@ open class PermissionTipsView @JvmOverloads constructor(
         iconImageView.setImageResource(resId)
     }
 
-    fun setTitle(title: String) {
+    fun setTitle(title: String, @ColorInt color: Int = Color.BLACK) {
         titleTextView.text = title
+        titleTextView.setTextColor(color)
     }
 
-    fun setMessage(message: String) {
+    fun setMessage(message: String, @ColorInt color: Int = Color.BLACK) {
         messageTextView.text = message
+        messageTextView.setTextColor(color)
+    }
+
+    fun setTipsBackground(drawable: Drawable) {
+        findViewById<View>(R.id.tips_root).background = drawable
     }
 
     fun show() {
@@ -113,10 +122,18 @@ open class PermissionTipsView @JvmOverloads constructor(
         private var backgroundDrawable: Drawable? = null
         private var horizontal: Boolean = true
 
+        private var textColor: Int = Color.BLACK
+
         fun setIcon(iconResId: Int) = apply { this.iconResId = iconResId }
         fun setTitle(title: String) = apply { this.title = title }
         fun setMessage(message: String) = apply { this.message = message }
+
+        fun setTextColor(@ColorInt color: Int) = apply {
+            this.textColor = color
+        }
+
         fun setBackground(background: Drawable?) = apply { this.backgroundDrawable = background }
+
         fun setOrientation(horizontal: Boolean) = apply { this.horizontal = horizontal }
 
         @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -125,10 +142,10 @@ open class PermissionTipsView @JvmOverloads constructor(
                 if (iconResId != 0) {
                     setIcon(iconResId)
                 }
-                setTitle(title)
-                setMessage(message)
+                setTitle(title, textColor)
+                setMessage(message, textColor)
                 if (backgroundDrawable != null) {
-                    background = backgroundDrawable
+                    setTipsBackground(backgroundDrawable!!)
                 }
             }
         }
